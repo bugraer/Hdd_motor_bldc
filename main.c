@@ -11,7 +11,7 @@ void TIM3_IRQHandler(){
 	hiz = c/60;
 
 }
-void delay(int x){
+void delay(x){
 for(int a=0;a<1000;a++);
 }
 int main(){
@@ -19,7 +19,7 @@ int main(){
 	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
 	RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN;
 	
-	RCC->APB1ENR |= RCC_APB1ENR_TIM3EN; // TIM3ENABLE
+	RCC->APB1ENR |= RCC_APB1ENR_TIM3EN; // TIM3 TIM4 ENABLE
 
 	GPIOA->MODER &= ~ GPIO_MODER_MODER0_0 | GPIO_MODER_MODER0_1;
 	GPIOA->MODER |= GPIO_MODER_MODER0_0 | GPIO_MODER_MODER0_1;
@@ -28,7 +28,7 @@ int main(){
   ADC1->CR2 |=ADC_CR2_CONT;
   ADC1->CR2 |= ADC_CR2_SWSTART;
 	adc=ADC1->DR;
-	
+	GPIOD->MODER |= GPIO_IDR_ID10; 
 	TIM3->PSC &= ~TIM_PSC_PSC;
 	TIM3->PSC |= 159;
 	TIM3->ARR &= ~TIM_PSC_PSC;
@@ -49,6 +49,8 @@ int main(){
 	TIM3->CR1 |= TIM_CR1_CEN;
 	
 	while(1){
+		while(GPIOD->IDR & 1<<10)
+		{
 	for(b=0;b<100;b++){
 	GPIOD->ODR |= GPIO_ODR_OD15;
 	delay(30);
@@ -132,6 +134,78 @@ int main(){
 	delay(5);
 	GPIOD->ODR |= GPIO_ODR_OD13;
 		c++;
+	}}
+		while(!(GPIOD->IDR & 1<<10)){
+	for(b=0;b<100;b++){
+	GPIOD->ODR |= GPIO_ODR_OD15;
+	delay(5);
+	GPIOD->ODR &= ~GPIO_ODR_OD15;
+	GPIOD->ODR |= GPIO_ODR_OD13;
+	delay(5);
+	GPIOD->ODR |= GPIO_ODR_OD13;
+	GPIOD->ODR |= GPIO_ODR_OD14;
+	delay(5);
+	GPIOD->ODR |= GPIO_ODR_OD14;
+		c++;
 	}
-}
-}
+	for(b=0;b<100;b++){
+	GPIOD->ODR |= GPIO_ODR_OD15;
+	delay(5);
+	GPIOD->ODR &= ~GPIO_ODR_OD15;
+	GPIOD->ODR |= GPIO_ODR_OD13;
+	delay(5);
+	GPIOD->ODR |= GPIO_ODR_OD13;
+	GPIOD->ODR |= GPIO_ODR_OD14;
+	delay(5);
+	GPIOD->ODR |= GPIO_ODR_OD14;
+		c++;
+	}
+	for(b=0;b<100;b++){
+	GPIOD->ODR |= GPIO_ODR_OD15;
+	delay(5);
+	GPIOD->ODR &= ~GPIO_ODR_OD15;
+	GPIOD->ODR |= GPIO_ODR_OD13;
+	delay(5);
+	GPIOD->ODR |= GPIO_ODR_OD13;
+	GPIOD->ODR |= GPIO_ODR_OD14;
+	delay(5);
+	GPIOD->ODR |= GPIO_ODR_OD14;
+		c++;
+	}
+	for(b=0;b<100;b++){
+	GPIOD->ODR |= GPIO_ODR_OD15;
+	delay(5);
+	GPIOD->ODR &= ~GPIO_ODR_OD15;
+	GPIOD->ODR |= GPIO_ODR_OD13;
+	delay(5);
+	GPIOD->ODR |= GPIO_ODR_OD13;
+	GPIOD->ODR |= GPIO_ODR_OD14;
+	delay(5);
+	GPIOD->ODR |= GPIO_ODR_OD14;
+		c++;
+	}
+	for(b=0;b<100;b++){
+	GPIOD->ODR |= GPIO_ODR_OD15;
+	delay(5);
+	GPIOD->ODR &= ~GPIO_ODR_OD15;
+	GPIOD->ODR |= GPIO_ODR_OD13;
+	delay(5);
+	GPIOD->ODR |= GPIO_ODR_OD13;
+	GPIOD->ODR |= GPIO_ODR_OD14;
+	delay(5);
+	GPIOD->ODR |= GPIO_ODR_OD14;
+		c++;
+	}
+	for(b=0;b<100;b++){
+	GPIOD->ODR |= GPIO_ODR_OD15;
+	delay(5);
+	GPIOD->ODR &= ~GPIO_ODR_OD15;
+	GPIOD->ODR |= GPIO_ODR_OD13;
+	delay(5);
+	GPIOD->ODR |= GPIO_ODR_OD13;
+	GPIOD->ODR |= GPIO_ODR_OD14;
+	delay(5);
+	GPIOD->ODR |= GPIO_ODR_OD14;
+		c++;
+	}
+}}
